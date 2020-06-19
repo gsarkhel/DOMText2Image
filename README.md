@@ -1,4 +1,4 @@
-# canvas-text-wrapper
+# Canvas Text to image
 Renders the DOM text on canvas and returns the "toDataURL()" response.
 
 ## Usage
