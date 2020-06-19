@@ -1,4 +1,4 @@
-class CanvasTextWrapper {
+class DOMText2Image {
   constructor() {
     this.element = document.createElement('div');
     this.cnv = document.createElement('canvas');

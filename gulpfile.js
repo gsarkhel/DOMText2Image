@@ -9,7 +9,7 @@ const gutil = require('gulp-util');
 const rename = require('gulp-rename');
 
 gulp.task('compile', function () {
-  return gulp.src('src/canvas-text-wrapper.js')
+  return gulp.src('src/DOMText2Image.js')
     .pipe(eslint())
     .pipe(babel())
     .pipe(uglify({
@@ -17,7 +17,7 @@ gulp.task('compile', function () {
         drop_console: false
       }
     }).on('error', gutil.log))
-    .pipe(rename('canvas-text-wrapper-min.js'))
+    .pipe(rename('DOMText2Image-min.js'))
     .pipe(gulp.dest('build/'));
 });
 
@@ -27,7 +27,7 @@ gulp.task('clean', function () {
 
 // Watch
 gulp.task('watch', function () {
-  gulp.watch('src/canvas-text-wrapper.js', gulp.series('compile'));
+  gulp.watch('src/DOMText2Image.js', gulp.series('compile'));
 });
 
 // Default

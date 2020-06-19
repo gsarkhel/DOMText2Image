@@ -1,5 +1,5 @@
 /* eslint-disable */
-const wrapObj = new CanvasTextWrapper();
+const wrapObj = new DOMText2Image();
 const img = new Image();
 window.onclick = function () {
   var converted = wrapObj.convertText(document.getElementsByClassName('sample')[0]);
