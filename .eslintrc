@@ -1,0 +1,90 @@
+{
+  "parser": "esprima",
+  "extends": "airbnb",
+  "globals": {
+    "window": false,
+    "document": false,
+    "Node": false
+  },
+  // "off" or 0 - turn the rule off
+  // "warn" or 1 - turn the rule on as a warning (doesn’t affect exit code)
+  // "error" or 2 - turn the rule on as an error (exit code is 1 when triggered)
+  "rules": {
+    // Tab check deactivated
+    "indent": 2,
+    // LF and CRLF ignored
+    "linebreak-style": 0,
+    // Prior defining of variables not necessary.
+    "no-use-before-define": 0,
+    // Double quotes are allowed
+    "quotes": 2,
+    // Ignoring the local variable definition on top
+    "vars-on-top": 0,
+    // "use strict" is not necessary.
+    "strict": 0,
+    // Variable names starting with underscore is allowed.
+    "no-underscore-dangle": 0,
+    // "Unexpected var, use let or const instead" still not used in Safari v9, so ignored
+    "no-var": 0,
+    // If var defined and not used
+    "no-unused-vars": 0,
+    // "==" is allowed over "===" strictness
+    "eqeqeq": 2,
+    // String concatenation ignored
+    "prefer-template": 0,
+    // "Missing trailing comma" Last statement in object definition should end with comma. Ignored
+    "comma-dangle": 0,
+    // Not to use i++ rather use i += 1.
+    "no-plusplus": 0,
+    // Ignoring restriction of the length of a line.
+    "max-len": 0,
+    // Ignoring restriction of the length of a line.
+    "new-cap": 0,
+    // Ignoring restriction on re-assigning the parameter.
+    "no-param-reassign": 0,
+    // Ignoring restriction on use of labels like loop1:for.
+    "no-labels": 2,
+    // Ignoring restriction on "is already declared in the upper scope".
+    "no-shadow": 0,
+    // Ignoring restriction on "is already declared in the upper scope".
+    "no-eval": 0,
+    // Forces to use arrow syntax for inner function. Ignored.
+    "prefer-arrow-callback": 0,
+    // Cannot create or call function inside a loop. Ignored.
+    "no-loop-func": 0,
+    // to allow adding additional method in String class.
+    "no-extend-native": 0,
+    // Necessary to have function names. Ignored.
+    "func-names": 0,
+    // Cannot assign return. Not found anything on Website. Ignored.
+    "no-return-assign": 0,
+    // Cannot create local functions. Ignored.
+    "no-inner-declarations": 0,
+    // multi definition allowed
+    "one-var": 0,
+    // to allow other objects to use hasOwnProperty in loop
+    "no-prototype-builtins": 0,
+    // to allow reuse of vars
+    "camelcase": 0,
+    // to allow reuse of vars
+    "block-scoped-var": 0,
+    // to allow bitwise of vars
+    "no-bitwise": 0,
+    // to allow no-throw-literal of vars
+    "no-throw-literal": 0,
+    // For CSS purpose
+    "quote-props": 0,
+    // continue statement is required
+    "no-continue": 0,
+    // regex expression allowed
+    "no-useless-escape": 0,
+    // ignore console statements
+    "no-console": 0,
+    "no-alert": 0,
+    "prefer-rest-params": 0,
+    "prefer-destructuring": 0,
+    "no-restricted-properties": 0,
+    "no-restricted-globals": 0,
+    "class-methods-use-this": 0
+  }
+}
