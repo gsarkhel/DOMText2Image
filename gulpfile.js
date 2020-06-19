@@ -6,6 +6,7 @@ const babel = require('gulp-babel');
 const del = require('del');
 const watch = require('gulp-watch');
 const gutil = require('gulp-util');
+const rename = require('gulp-rename');
 
 gulp.task('compile', function () {
   return gulp.src('src/canvas-text-wrapper.js')
@@ -16,7 +17,8 @@ gulp.task('compile', function () {
         drop_console: false
       }
     }).on('error', gutil.log))
-    .pipe(gulp.dest('build/canvas-text-wrapper-min.js'));
+    .pipe(rename('canvas-text-wrapper-min.js'))
+    .pipe(gulp.dest('build/'));
 });
 
 gulp.task('clean', function () {
