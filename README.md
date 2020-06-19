@@ -28,8 +28,15 @@ HTML Sample
 ```
 Javascript Sample
 ```javascript
-const canvasTextWrapper = new CanvasTextWrapper();
-var converted = wrapObj.convertText(document.getElementsByClassName('sample')[0]);
+const wrapObj = new CanvasTextWrapper();
+const img = new Image();
+window.onclick = function () {
+  var converted = wrapObj.convertText(document.getElementsByClassName('sample')[0]);
+  img.src=converted.img;
+  img.width = converted.width;
+  img.height = converted.height;
+  document.body.appendChild(img);
+};
 ```
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
