@@ -4,8 +4,6 @@ class CanvasTextWrapper {
     this.cnv = document.createElement('canvas');
     this.ctx = this.cnv.getContext('2d');
     this.scale = window.devicePixelRatio;
-    this.cnv.width = window.outerWidth * this.scale;
-    this.cnv.height = window.outerHeight * this.scale;
   }
 
   convertText(elem) {
@@ -24,7 +22,9 @@ class CanvasTextWrapper {
     this.extractedProperties = [];
     this.extractNodeProperties(this.element, this.extractedProperties);
     this.modifyExtractedProperties();
-    this.prepareCanvas();
+    const obj = this.prepareCanvas();
+    document.body.removeChild(this.element);
+    return obj;
   }
 
   extractNodeProperties(node, arr) {
@@ -49,7 +49,7 @@ class CanvasTextWrapper {
   modifyExtractedProperties() {
     var newString = '';
     this.extractedProperties.forEach((item, i) => {
-      const modSpan = `<span style="align:${item.align}; font-family:${item.fontFamily}; font-size:${item.fontSize}; font-weight:${item.fontWeight}; font-style:${item.fontStyle}; color:${item.color};">`;
+      const modSpan = `<span style="font-family:${item.fontFamily}; font-size:${item.fontSize}; font-weight:${item.fontWeight}; font-style:${item.fontStyle}; color:${item.color};">`;
       const itemText = item.text.split(' ').join(`</span> ${modSpan}`);
       item.text = `${modSpan}${item.text}</span>`;
       newString = `${newString}${modSpan}${itemText}</span>`;
@@ -61,6 +61,11 @@ class CanvasTextWrapper {
     // document.body.appendChild(this.cnv);
     // this.cnv.style.width = `${window.outerWidth}px`;
     // this.cnv.style.height = `${window.outerHeight}px`;
+    const width = this.element.offsetWidth;
+    const height = this.element.offsetHeight;
+
+    this.cnv.width = width * this.scale;
+    this.cnv.height = height * this.scale;
 
     this.ctx.clearRect(0, 0, this.cnv.width, this.cnv.height);
     this.ctx.save();
@@ -73,8 +78,10 @@ class CanvasTextWrapper {
       this.ctx.fillStyle = comp.color;
       this.ctx.font = `${comp.fontStyle} ${comp.fontWeight} ${comp.fontSize} ${comp.fontFamily}`;
       this.ctx.textBaseline = 'bottom';
-      this.ctx.fillText(spans[i].textContent, spans[i].offsetLeft, spans[i].offsetTop + size);
+      this.ctx.fillText(spans[i].textContent, spans[i].offsetLeft, spans[i].offsetTop + spans[i].offsetHeight);
     }
     this.ctx.restore();
+
+    return { img: this.cnv.toDataURL(), width, height };
   }
 }
