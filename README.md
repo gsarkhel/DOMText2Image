@@ -1,4 +1,4 @@
-# Canvas Text to image
+# Canvas Text to Image
 Renders the DOM text on canvas and returns the "toDataURL()" response.
 
 ## Usage
