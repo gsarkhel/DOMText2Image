@@ -18,12 +18,13 @@ class DOMText2Image {
     this.element.style.fontSize = style.fontSize;
     this.element.style.textAlign = style.textAlign;
     this.element.style.visibility = 'hidden';
+    this.element.setAttribute('DomText2ImageDiv', 'true');
 
     this.extractedProperties = [];
     this.extractNodeProperties(this.element, this.extractedProperties);
     this.modifyExtractedProperties();
     const obj = this.prepareCanvas();
-    document.body.removeChild(this.element);
+    // document.body.removeChild(this.element);
     return obj;
   }
 
@@ -33,12 +34,18 @@ class DOMText2Image {
       if (nodes[i].nodeType === Node.TEXT_NODE) {
         const comp = window.getComputedStyle(node);
         arr.push({
+          nodeName: (node.getAttribute('DomText2ImageDiv') === 'true' ? 'SPAN' : node.nodeName),
           fontFamily: comp.getPropertyValue('font-family'),
           fontSize: comp.getPropertyValue('font-size'),
           fontWeight: comp.getPropertyValue('font-weight'),
           fontStyle: comp.getPropertyValue('font-style'),
           color: comp.getPropertyValue('color'),
           text: nodes[i].textContent
+        });
+      } else if (nodes[i].nodeName === 'BR') {
+        arr.push({
+          nodeName: nodes[i].nodeName,
+          text: '<br/>'
         });
       } else {
         this.extractNodeProperties(nodes[i], arr);
@@ -49,10 +56,14 @@ class DOMText2Image {
   modifyExtractedProperties() {
     var newString = '';
     this.extractedProperties.forEach((item, i) => {
-      const modSpan = `<span style="font-family:${item.fontFamily}; font-size:${item.fontSize}; font-weight:${item.fontWeight}; font-style:${item.fontStyle}; color:${item.color};">`;
-      const itemText = item.text.split(' ').join(`</span> ${modSpan}`);
-      item.text = `${modSpan}${item.text}</span>`;
-      newString = `${newString}${modSpan}${itemText}</span>`;
+      if (item.nodeName !== 'BR') {
+        const modStartSpan = `<${item.nodeName} style="font-family:${item.fontFamily}; font-size:${item.fontSize}; font-weight:${item.fontWeight}; font-style:${item.fontStyle}; color:${item.color};">`;
+        const modEndSpan = `</${item.nodeName}>`;
+
+        const itemText = item.text.split(' ').join(`${modEndSpan} ${modStartSpan}`);
+        item.text = `${modStartSpan}${itemText}${modEndSpan}`;
+      }
+      newString = `${newString}${item.text}`;
     });
     this.element.innerHTML = newString;
   }
@@ -71,14 +82,16 @@ class DOMText2Image {
     this.ctx.save();
     this.ctx.scale(this.scale, this.scale);
 
-    const spans = this.element.getElementsByTagName('span');
+    const spans = this.element.children;
     for (var i = 0; i < spans.length; i++) {
-      var comp = window.getComputedStyle(spans[i]);
-      const size = parseFloat(comp.fontSize);
-      this.ctx.fillStyle = comp.color;
-      this.ctx.font = `${comp.fontStyle} ${comp.fontWeight} ${comp.fontSize} ${comp.fontFamily}`;
-      this.ctx.textBaseline = 'bottom';
-      this.ctx.fillText(spans[i].textContent, spans[i].offsetLeft, spans[i].offsetTop + spans[i].offsetHeight);
+      if (spans[i].nodeName !== 'BR') {
+        var comp = window.getComputedStyle(spans[i]);
+        const size = parseFloat(comp.fontSize);
+        this.ctx.fillStyle = comp.color;
+        this.ctx.font = `${comp.fontStyle} ${comp.fontWeight} ${comp.fontSize} ${comp.fontFamily}`;
+        this.ctx.textBaseline = 'bottom';
+        this.ctx.fillText(spans[i].textContent, spans[i].offsetLeft, spans[i].offsetTop + spans[i].offsetHeight);
+      }
     }
     this.ctx.restore();
 
