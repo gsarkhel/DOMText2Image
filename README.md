@@ -1,5 +1,5 @@
 # DOM Text to Image
-Renders the DOM text on canvas and returns as an image. Only SPANs are supported in this version.
+Renders the DOM (HTML) text on canvas and returns as an image. Only SPANs are supported in this version.
 
 ## Usage
 
