@@ -12,11 +12,11 @@ gulp.task('compile', function () {
   return gulp.src('src/DOMText2Image.js')
     .pipe(eslint())
     .pipe(babel())
-    // .pipe(uglify({
-    //   compress: {
-    //     drop_console: false
-    //   }
-    // }).on('error', gutil.log))
+    .pipe(uglify({
+      compress: {
+        drop_console: false
+      }
+    }).on('error', gutil.log))
     .pipe(rename('DOMText2Image-min.js'))
     .pipe(gulp.dest('build/'));
 });
